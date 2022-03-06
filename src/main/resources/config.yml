@@ -1,0 +1,9 @@
+sql:
+  hostname: hostname
+  port: 3306
+  database: db
+  username: user
+  password: pass
+  connectionsMin: 1
+  connectionsMax: 5
+  sql.connectionsTimeout: 3000
