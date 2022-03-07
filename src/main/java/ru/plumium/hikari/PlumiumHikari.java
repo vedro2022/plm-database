@@ -24,6 +24,7 @@ public class PlumiumHikari extends JavaPlugin {
     @Override
     public void onEnable() {
         loadConfig();
+        testString = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
         hikariPool = new ConnectionPoolManager(this);
     }
 
