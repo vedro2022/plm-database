@@ -41,11 +41,11 @@ public class PlumiumHikari extends JavaPlugin {
         config = YamlConfiguration.loadConfiguration(configFile);
     }
 
-    public Connection getHikariConnection() throws SQLException {
+    public static Connection getHikariConnection() throws SQLException {
         return hikariPool.getConnection();
     }
 
-    public void closeHikariConnection(Connection conn, PreparedStatement ps, ResultSet res) {
+    public static void closeHikariConnection(Connection conn, PreparedStatement ps, ResultSet res) {
         hikariPool.close(conn, ps, res);
     }
 }
