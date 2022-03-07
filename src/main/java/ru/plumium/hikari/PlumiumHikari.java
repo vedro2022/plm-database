@@ -23,9 +23,12 @@ public class PlumiumHikari extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Bukkit.getLogger().info(testString);
         loadConfig();
         testString = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
         hikariPool = new ConnectionPoolManager(this);
+        Bukkit.getLogger().info(testString);
+        Bukkit.getLogger().info(hikariPool.toString());
     }
 
     @Override
