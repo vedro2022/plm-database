@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.plumium</groupId>
-    <artifactId>plumium-hikari</artifactId>
+    <artifactId>plm-hikari</artifactId>
     <version>1.0</version>
 
     <properties>
