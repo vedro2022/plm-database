@@ -2,6 +2,7 @@ package ru.plumium.hikari;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConnectionPoolManager {
-    private final PlumiumHikari plugin;
+    private final Plugin plugin;
 
-    private HikariDataSource dataSource;
+    private static HikariDataSource dataSource;
 
     private String hostname;
     private String port;
@@ -23,7 +24,7 @@ public class ConnectionPoolManager {
     private int connectionTimeout;
     private String testQuery;
 
-    public ConnectionPoolManager(PlumiumHikari plugin) {
+    public ConnectionPoolManager(Plugin plugin) {
         this.plugin = plugin;
         init();
         setupPool();
