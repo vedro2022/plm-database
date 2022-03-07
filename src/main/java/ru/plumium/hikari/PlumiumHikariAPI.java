@@ -4,13 +4,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface PlumiumHikariAPI {
-    static Connection getConnection() throws SQLException {
-        return null;
-    }
+    Connection getConnection() throws SQLException;
 
-    static void closeConnection() { }
+    void closeConnection();
 
-    static String getTestString() {
-        return null;
-    }
+    String getTestString();
 }

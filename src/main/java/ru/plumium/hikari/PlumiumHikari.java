@@ -3,19 +3,20 @@ package ru.plumium.hikari;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PlumiumHikari extends JavaPlugin implements PlumiumHikariAPI {
+public class PlumiumHikari extends JavaPlugin {
     private FileConfiguration config;
-    private static ConnectionPoolManager hikariPool;
-    private static String testString = "halloy hallsdla sk djjkfcnj akjdkasd";
 
     public @NotNull FileConfiguration getConfig() {
         return config;
@@ -23,17 +24,23 @@ public class PlumiumHikari extends JavaPlugin implements PlumiumHikariAPI {
 
     @Override
     public void onEnable() {
-        Bukkit.getLogger().info(testString);
         loadConfig();
-        testString = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
-        hikariPool = new ConnectionPoolManager(this);
-        Bukkit.getLogger().info(testString);
-        Bukkit.getLogger().info(hikariPool.toString());
+
+        try {
+            getServer().getServicesManager()
+                    .register(PlumiumHikariAPI.class,
+                            PH.class.getConstructor(PlumiumHikari.class).newInstance(this),
+                            this,
+                            ServicePriority.Normal);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void onDisable() {
-        hikariPool.closePool();
+
     }
 
     private void loadConfig() {
@@ -46,15 +53,15 @@ public class PlumiumHikari extends JavaPlugin implements PlumiumHikariAPI {
         config = YamlConfiguration.loadConfiguration(configFile);
     }
 
-    public static Connection getConnection() throws SQLException {
-        return hikariPool.getConnection();
-    }
-
-    public static void closeConnection(Connection conn, PreparedStatement ps, ResultSet res) {
-        hikariPool.close(conn, ps, res);
-    }
-
-    public static String getTestString() {
-        return testString;
-    }
+//    public static Connection getConnection() throws SQLException {
+//        return hikariPool.getConnection();
+//    }
+//
+//    public static void closeConnection(Connection conn, PreparedStatement ps, ResultSet res) {
+//        hikariPool.close(conn, ps, res);
+//    }
+//
+//    public static String getTestString() {
+//        return testString;
+//    }
 }
