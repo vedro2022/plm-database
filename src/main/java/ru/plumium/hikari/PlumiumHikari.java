@@ -13,17 +13,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PlumiumHikari extends JavaPlugin {
-    private FileConfiguration config;
     private static ConnectionPoolManager hikariPool;
-
-    public @NotNull FileConfiguration getConfig() {
-        return config;
-    }
 
     @Override
     public void onLoad() {
-        loadConfig();
-        hikariPool = new ConnectionPoolManager(this);
+        try {
+            loadConfig();
+            hikariPool = new ConnectionPoolManager(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -36,9 +35,9 @@ public class PlumiumHikari extends JavaPlugin {
         if (!configFile.exists()) {
             Bukkit.getLogger().warning("Файл конфигурации не обнаружен, создаём дефолтный.");
             this.saveDefaultConfig();
-            config = YamlConfiguration.loadConfiguration(configFile);
+            YamlConfiguration.loadConfiguration(configFile);
         }
-        config = YamlConfiguration.loadConfiguration(configFile);
+        YamlConfiguration.loadConfiguration(configFile);
     }
 
     public static Connection getHikariConnection() throws SQLException {
