@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class ConnectionPoolManager {
     private final PlumiumHikari plugin;
 
-    private HikariDataSource dataSource;
+    private static HikariDataSource dataSource;
 
     private String hostname;
     private String port;
