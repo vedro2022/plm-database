@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PlumiumHikari extends JavaPlugin {
+public class PlumiumHikari extends JavaPlugin implements PlumiumHikariAPI {
     private FileConfiguration config;
     private static ConnectionPoolManager hikariPool;
     private static String testString = "halloy hallsdla sk djjkfcnj akjdkasd";
@@ -46,11 +46,11 @@ public class PlumiumHikari extends JavaPlugin {
         config = YamlConfiguration.loadConfiguration(configFile);
     }
 
-    public static Connection getHikariConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return hikariPool.getConnection();
     }
 
-    public static void closeHikariConnection(Connection conn, PreparedStatement ps, ResultSet res) {
+    public static void closeConnection(Connection conn, PreparedStatement ps, ResultSet res) {
         hikariPool.close(conn, ps, res);
     }
 
