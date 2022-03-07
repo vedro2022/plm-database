@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class PlumiumHikari extends JavaPlugin {
     private FileConfiguration config;
-    private ConnectionPoolManager hikariPool;
+    private static ConnectionPoolManager hikariPool;
 
     public @NotNull FileConfiguration getConfig() {
         return config;
