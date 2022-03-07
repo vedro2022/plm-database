@@ -15,6 +15,7 @@ import java.sql.SQLException;
 public class PlumiumHikari extends JavaPlugin {
     private FileConfiguration config;
     private static ConnectionPoolManager hikariPool;
+    private static String testString = "halloy hallsdla sk djjkfcnj akjdkasd";
 
     public @NotNull FileConfiguration getConfig() {
         return config;
@@ -47,5 +48,9 @@ public class PlumiumHikari extends JavaPlugin {
 
     public static void closeHikariConnection(Connection conn, PreparedStatement ps, ResultSet res) {
         hikariPool.close(conn, ps, res);
+    }
+
+    public static String getTestString() {
+        return testString;
     }
 }

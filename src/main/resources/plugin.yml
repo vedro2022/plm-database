@@ -1,5 +1,5 @@
+api-version: 1.18
 name: PlumiumHikari
 description: Пул соединений с БД для плагинов Plumium Server.
 main: ru.plumium.hikari.PlumiumHikari
-version: 1.0
-api-version: 1.18
+version: ${project.version}
