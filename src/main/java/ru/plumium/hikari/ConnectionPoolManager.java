@@ -22,6 +22,7 @@ public class ConnectionPoolManager {
     private int minimumConnections;
     private int maximumConnections;
     private int connectionTimeout;
+    private int maxLifetime;
     private String testQuery;
 
     public ConnectionPoolManager(Plugin plugin) {
@@ -39,6 +40,7 @@ public class ConnectionPoolManager {
         minimumConnections = plugin.getConfig().getInt("sql.connectionsMin");
         maximumConnections = plugin.getConfig().getInt("sql.connectionsMax");
         connectionTimeout = plugin.getConfig().getInt("sql.connectionsTimeout");
+        maxLifetime = plugin.getConfig().getInt("sql.maxLifetime");
         testQuery = "SELECT 1;";
     }
 
@@ -58,6 +60,7 @@ public class ConnectionPoolManager {
         config.setPassword(password);
         config.setMinimumIdle(minimumConnections);
         config.setMaximumPoolSize(maximumConnections);
+        config.setMaxLifetime(maxLifetime);
         config.setConnectionTimeout(connectionTimeout);
         config.setConnectionTestQuery(testQuery);
         dataSource = new HikariDataSource(config);

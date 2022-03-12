@@ -6,4 +6,5 @@ sql:
   password: pass
   connectionsMin: 1
   connectionsMax: 5
-  sql.connectionsTimeout: 3000
+  connectionsTimeout: 3000
+  maxLifetime: 60000
