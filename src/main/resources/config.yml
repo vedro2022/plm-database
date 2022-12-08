@@ -1,10 +1,10 @@
-sql:
-  hostname: hostname
-  port: 3306
-  database: db
-  username: user
-  password: pass
-  connectionsMin: 1
-  connectionsMax: 5
-  connectionsTimeout: 3000
-  maxLifetime: 60000
+SQL:
+  HOSTNAME: hostname
+  PORT: 3306
+  DATABASE: db
+  USERNAME: user
+  PASSWORD: pass
+  CONNECTIONS_MIN: 1
+  CONNECTIONS_MAX: 5
+  CONNECTIONS_TIMEOUT: 3000
+  MAX_LIFE_TIME: 60000

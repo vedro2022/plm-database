@@ -1,5 +1,5 @@
-api-version: 1.18
-name: PLM-Hikari
-version: 1.0
-description: Пул соединений с БД для плагинов Plumium Server.
-main: ru.plumium.hikari.PLMHikari
+name: PLM-Database
+main: ru.plumium.commands.PLMDatabase
+description: Плагин пула соединений с БД.
+version: 0.1.19.2
+api-version: 1.19

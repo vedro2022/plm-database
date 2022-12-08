@@ -1,8 +1,8 @@
-package ru.plumium.hikari;
+package ru.plumium.database.utils;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.bukkit.plugin.Plugin;
+import ru.plumium.database.PLMDatabase;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,10 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConnectionPoolManager {
-    private final Plugin plugin;
 
-    private static HikariDataSource dataSource;
+    private final PLMDatabase plugin;
 
+    private HikariDataSource dataSource;
     private String hostname;
     private String port;
     private String database;
@@ -23,25 +23,23 @@ public class ConnectionPoolManager {
     private int maximumConnections;
     private int connectionTimeout;
     private int maxLifetime;
-    private String testQuery;
 
-    public ConnectionPoolManager(Plugin plugin) {
+    public ConnectionPoolManager(PLMDatabase plugin) {
         this.plugin = plugin;
-        init();
+        initVariables();
         setupPool();
     }
 
-    private void init() {
-        hostname = plugin.getConfig().getString("sql.hostname");
-        port = plugin.getConfig().getString("sql.port");
-        database = plugin.getConfig().getString("sql.database");
-        username = plugin.getConfig().getString("sql.username");
-        password = plugin.getConfig().getString("sql.password");
-        minimumConnections = plugin.getConfig().getInt("sql.connectionsMin");
-        maximumConnections = plugin.getConfig().getInt("sql.connectionsMax");
-        connectionTimeout = plugin.getConfig().getInt("sql.connectionsTimeout");
-        maxLifetime = plugin.getConfig().getInt("sql.maxLifetime");
-        testQuery = "SELECT 1;";
+    private void initVariables() {
+        hostname = plugin.getConfigUtils().getConfigString("SQL.HOSTNAME");
+        port = plugin.getConfigUtils().getConfigString("SQL.PORT");
+        database = plugin.getConfigUtils().getConfigString("SQL.DATABASE");
+        username = plugin.getConfigUtils().getConfigString("SQL.USERNAME");
+        password = plugin.getConfigUtils().getConfigString("SQL.PASSWORD");
+        minimumConnections = plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_MIN");
+        maximumConnections = plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_MAX");
+        connectionTimeout = plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_TIMEOUT");
+        maxLifetime = plugin.getConfigUtils().getConfigInt("SQL.MAX_LIFE_TIME");
     }
 
     private void setupPool() {
@@ -49,11 +47,7 @@ public class ConnectionPoolManager {
         config.setDriverClassName("com.mysql.jdbc.Driver");
         config.setJdbcUrl(
                 "jdbc:mysql://" +
-                        hostname +
-                        ":" +
-                        port +
-                        "/" +
-                        database +
+                        hostname + ":" + port + "/" + database +
                         "?serverTimezone=UTC&rewriteBatchedStatements=true&characterEncoding=utf8"
         );
         config.setUsername(username);
@@ -62,7 +56,7 @@ public class ConnectionPoolManager {
         config.setMaximumPoolSize(maximumConnections);
         config.setMaxLifetime(maxLifetime);
         config.setConnectionTimeout(connectionTimeout);
-        config.setConnectionTestQuery(testQuery);
+        config.setConnectionTestQuery("SELECT 1;");
         dataSource = new HikariDataSource(config);
     }
 
