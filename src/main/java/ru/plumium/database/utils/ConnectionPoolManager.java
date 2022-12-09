@@ -30,7 +30,6 @@ public class ConnectionPoolManager {
         config.setMaximumPoolSize(plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_MAX"));
         config.setConnectionTimeout(plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_TIMEOUT"));
         config.setMaxLifetime(plugin.getConfigUtils().getConfigInt("SQL.MAX_LIFE_TIME"));
-        config.setIdleTimeout(plugin.getConfigUtils().getConfigInt("SQL.IDLE_TIMEOUT"));
         dataSource = new HikariDataSource(config);
     }
 
