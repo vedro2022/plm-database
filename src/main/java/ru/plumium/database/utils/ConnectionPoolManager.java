@@ -11,52 +11,26 @@ import java.sql.SQLException;
 
 public class ConnectionPoolManager {
 
-    private final PLMDatabase plugin;
-
-    private HikariDataSource dataSource;
-    private String hostname;
-    private String port;
-    private String database;
-    private String username;
-    private String password;
-    private int minimumConnections;
-    private int maximumConnections;
-    private int connectionTimeout;
-    private int maxLifetime;
+    private final HikariDataSource dataSource;
 
     public ConnectionPoolManager(PLMDatabase plugin) {
-        this.plugin = plugin;
-        initVariables();
-        setupPool();
-    }
-
-    private void initVariables() {
-        hostname = plugin.getConfigUtils().getConfigString("SQL.HOSTNAME");
-        port = plugin.getConfigUtils().getConfigString("SQL.PORT");
-        database = plugin.getConfigUtils().getConfigString("SQL.DATABASE");
-        username = plugin.getConfigUtils().getConfigString("SQL.USERNAME");
-        password = plugin.getConfigUtils().getConfigString("SQL.PASSWORD");
-        minimumConnections = plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_MIN");
-        maximumConnections = plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_MAX");
-        connectionTimeout = plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_TIMEOUT");
-        maxLifetime = plugin.getConfigUtils().getConfigInt("SQL.MAX_LIFE_TIME");
-    }
-
-    private void setupPool() {
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("com.mysql.jdbc.Driver");
         config.setJdbcUrl(
                 "jdbc:mysql://" +
-                        hostname + ":" + port + "/" + database +
+                        plugin.getConfigUtils().getConfigString("SQL.HOSTNAME") +
+                        ":" +
+                        plugin.getConfigUtils().getConfigString("SQL.PORT") +
+                        "/" +
+                        plugin.getConfigUtils().getConfigString("SQL.DATABASE") +
                         "?serverTimezone=UTC&rewriteBatchedStatements=true&characterEncoding=utf8"
         );
-        config.setUsername(username);
-        config.setPassword(password);
-        config.setMinimumIdle(minimumConnections);
-        config.setMaximumPoolSize(maximumConnections);
-        config.setMaxLifetime(maxLifetime);
-        config.setConnectionTimeout(connectionTimeout);
-        config.setConnectionTestQuery("SELECT 1;");
+        config.setUsername(plugin.getConfigUtils().getConfigString("SQL.USERNAME"));
+        config.setPassword(plugin.getConfigUtils().getConfigString("SQL.PASSWORD"));
+        config.setMaximumPoolSize(plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_MAX"));
+        config.setConnectionTimeout(plugin.getConfigUtils().getConfigInt("SQL.CONNECTIONS_TIMEOUT"));
+        config.setMaxLifetime(plugin.getConfigUtils().getConfigInt("SQL.MAX_LIFE_TIME"));
+        config.setIdleTimeout(plugin.getConfigUtils().getConfigInt("SQL.IDLE_TIMEOUT"));
         dataSource = new HikariDataSource(config);
     }
 
