@@ -1,5 +1,5 @@
 name: PLM-Database
-main: ru.plumium.commands.PLMDatabase
+main: ru.plumium.database.PLMDatabase
 description: Плагин пула соединений с БД.
 version: 0.1.19.2
 api-version: 1.19
